@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-500 ease-out;
+  }
+  a {
+    @apply transition-opacity duration-200 ease-out;
+  }
+  a:hover:not(.group) {
+    @apply opacity-50;
+  }
+}

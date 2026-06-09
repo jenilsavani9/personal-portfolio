@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log — Jenil Savani</title>
+
+    <!-- SEO (og:title / description refined per-log by JS below) -->
+    <meta name="description" id="meta-description" content="An engineering log by Jenil Savani — Site Reliability & Systems Engineer.">
+    <meta name="author" content="Jenil Savani">
+    <meta name="theme-color" content="#121212">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Jenil Savani">
+    <meta property="og:title" id="og-title" content="Log — Jenil Savani">
+    <meta property="og:description" id="og-description" content="An engineering log by Jenil Savani.">
+    <meta property="og:image" content="https://jenilsavani.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://jenilsavani.com/og-image.png">
+
+    <script>
+        // Apply theme before paint to avoid a flash of the wrong theme.
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark-theme');
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+    <style>
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-smooth iframe { pointer-events: none; }
+
+        :root {
+            --bg: #FAFAFA;
+            --text: #1A1A1A;
+            --muted: #878787;
+            --code-bg: #F0F0F0;
+            --border: #EAEAEA;
+        }
+        html.dark-theme {
+            --bg: #121212;
+            --text: #EAEAEA;
+            --muted: #A1A1A1;
+            --code-bg: #1E1E1E;
+            --border: #2A2A2A;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            background-color: var(--bg); color: var(--text);
+            font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6; letter-spacing: -0.01em; transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 10vh 5vw; position: relative; }
+        
+        #theme-toggle {
+            position: absolute; top: calc(10vh - 0.25rem); right: calc(5vw - 0.5rem);
+            background: none; border: none; cursor: pointer; color: var(--muted); padding: 0.5rem;
+            display: flex; align-items: center; justify-content: center; transition: color 0.4s ease; z-index: 10;
+        }
+        #theme-toggle:hover { color: var(--text); }
+        #theme-toggle svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-link { display: inline-block; margin-bottom: 3rem; color: var(--muted); font-size: 0.875rem; text-decoration: none; transition: color 0.2s ease; }
+        .back-link:hover { color: var(--text); }
+
+        #log-title { font-size: 2rem; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 1.5rem; line-height: 1.2; }
+        
+        /* Metadata Grid */
+        .metadata-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 2rem;
+            padding-bottom: 2rem; margin-bottom: 3rem; border-bottom: 1px solid var(--border);
+            transition: border-color 0.4s ease;
+        }
+        .meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+        .meta-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 500; }
+        .meta-value { font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+
+        /* Markdown Styles */
+        #markdown-content p { margin-bottom: 1.5rem; }
+        #markdown-content h2, #markdown-content h3 { font-weight: 500; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        #markdown-content h2 { font-size: 1.25rem; }
+        #markdown-content h3 { font-size: 1.125rem; }
+        #markdown-content a { color: inherit; text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 4px; transition: text-decoration-color 0.2s ease; }
+        #markdown-content a:hover { text-decoration-color: var(--text); }
+        #markdown-content ul, #markdown-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        #markdown-content li { margin-bottom: 0.5rem; }
+        
+        #markdown-content pre {
+            background-color: var(--code-bg); padding: 1.5rem; border-radius: 8px;
+            overflow-x: auto; margin: 2rem 0; font-size: 0.875rem; line-height: 1.5;
+            transition: background-color 0.4s ease;
+        }
+        #markdown-content code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background-color: var(--code-bg); padding: 0.2rem 0.4rem; border-radius: 4px;
+            font-size: 0.875em; color: var(--text); transition: background-color 0.4s ease;
+        }
+        #markdown-content pre code { background-color: transparent; padding: 0; border-radius: 0; font-size: 1em; }
+        
+        #markdown-content blockquote {
+            border-left: 3px solid var(--border); margin: 2rem 0; padding-left: 1.5rem;
+            color: var(--muted); font-style: normal; transition: border-color 0.4s ease;
+        }
+        
+        #markdown-content table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 0.875rem; }
+        #markdown-content th, #markdown-content td { padding: 0.75rem 1rem; text-align: left; }
+        #markdown-content th { font-weight: 500; border-bottom: 1px solid var(--border); color: var(--muted); transition: border-color 0.4s ease; }
+        #markdown-content tr { border-bottom: 1px solid var(--border); transition: border-color 0.4s ease; }
+        #markdown-content tr:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="theme-toggle" aria-label="Toggle theme" class="reveal">
+            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"></svg>
+        </button>
+
+        <header class="reveal">
+            <a href="index.html" class="back-link">← Back to Index</a>
+            <h1 id="log-title">Loading...</h1>
+            <div class="metadata-grid" id="metadata-grid" style="display: none;">
+                <div class="meta-item"><span class="meta-label">Date</span><span class="meta-value" id="meta-date"></span></div>
+                <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" id="meta-status"></span></div>
+                <div class="meta-item"><span class="meta-label">Environment</span><span class="meta-value" id="meta-env"></span></div>
+            </div>
+        </header>
+
+        <div id="markdown-content"></div>
+    </div>
+
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script>
+        // Initialize Smooth Momentum Scrolling (60fps hardware accelerated feel)
+        const lenis = new Lenis({
+            lerp: 0.07,
+            smoothWheel: true
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        const sunIcon = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+
+        function updateIcon() { themeIcon.innerHTML = document.documentElement.classList.contains('dark-theme') ? sunIcon : moonIcon; }
+        updateIcon();
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateIcon();
+        });
+
+        let staggerDelay = 0;
+        let staggerTimeout;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${staggerDelay}s`;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+
+                    staggerDelay += 0.1; // 100ms stagger between elements
+                    clearTimeout(staggerTimeout);
+                    staggerTimeout = setTimeout(() => {
+                        staggerDelay = 0;
+                    }, 50); // Reset stagger if no new elements appear within 50ms
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+        function observeElements() {
+            document.querySelectorAll('.reveal:not(.active)').forEach(el => observer.observe(el));
+        }
+
+        document.addEventListener('DOMContentLoaded', observeElements);
+
+        const params = new URLSearchParams(window.location.search);
+        const logId = params.get('log');
+
+        if (logId) {
+            fetch('logs.json')
+                .then(res => res.json())
+                .then(logs => {
+                    const log = logs.find(l => l.id === logId);
+                    if (log) {
+                        document.getElementById('log-title').textContent = log.title;
+                        document.title = log.title + ' — Jenil Savani';
+
+                        // Refine SEO/social tags for this specific log
+                        const metaBits = [log.status, log.environment, log.date].filter(Boolean).join(' · ');
+                        const desc = metaBits ? `${log.title} (${metaBits}) — engineering log by Jenil Savani.` : `${log.title} — engineering log by Jenil Savani.`;
+                        document.getElementById('meta-description').setAttribute('content', desc);
+                        document.getElementById('og-title').setAttribute('content', log.title + ' — Jenil Savani');
+                        document.getElementById('og-description').setAttribute('content', desc);
+                        let canonical = document.querySelector('link[rel="canonical"]');
+                        if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+                        canonical.href = 'https://jenilsavani.com/log-template.html?log=' + encodeURIComponent(log.id);
+                        document.getElementById('meta-date').textContent = log.date || 'N/A';
+                        document.getElementById('meta-status').textContent = log.status || 'N/A';
+                        document.getElementById('meta-env').textContent = log.environment || 'N/A';
+                        document.getElementById('metadata-grid').style.display = 'grid';
+                    } else {
+                        document.getElementById('log-title').textContent = 'Log Not Found';
+                    }
+                });
+
+            fetch('logs/' + logId + '.md')
+                .then(res => {
+                    if (!res.ok) throw new Error('File not found');
+                    return res.text();
+                })
+                .then(text => {
+                    document.getElementById('markdown-content').innerHTML = DOMPurify.sanitize(marked.parse(text));
+                    
+                    const elementsToAnimate = document.querySelectorAll('#markdown-content p, #markdown-content pre, #markdown-content blockquote, #markdown-content ul, #markdown-content h2');
+                    elementsToAnimate.forEach(el => el.classList.add('reveal'));
+                    observeElements();
+                })
+                .catch(err => {
+                    document.getElementById('markdown-content').innerHTML = '<p>Could not load the requested log file.</p>';
+                });
+        } else {
+            document.getElementById('log-title').textContent = 'No Log Specified';
+            document.getElementById('markdown-content').innerHTML = '<p style="color: var(--muted)">Please specify a log ID in the URL parameter ?log=id.</p>';
+        }
+    </script>
+</body>
+</html>

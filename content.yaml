@@ -1,0 +1,65 @@
+# ============================================================
+#  PORTFOLIO CONTENT — edit this file only.
+#  Change any text below, save, refresh. That's it.
+#  Lines starting with #  are comments (ignored).
+# ============================================================
+
+# ---- Header ----
+name: Jenil Savani
+role: Site Reliability Engineer | Systems Engineer
+
+# ---- Intro paragraph (the > lets you wrap across lines) ----
+bio: >
+  Engineer focused on building robust infrastructure, scaling backend
+  systems from zero to production, and ensuring high availability. Strong
+  bias toward automating operational toil, optimizing CI/CD pipelines, and
+  owning complex architectural reliability problems end-to-end.
+
+# ---- Accent line under the bio (any language; leave blank to hide) ----
+quote: あなたが変わるか、すべてが繰り返されるか。
+
+# ---- Social links. 'type' must be one of: linkedin, github, email ----
+socials:
+  - type: linkedin
+    url: https://linkedin.com/in/jenil-savani
+  - type: github
+    url: https://github.com/jenilsavani9
+  - type: email
+    url: mailto:jenilsavani.dev@gmail.com
+
+# ---- Section headings (rename if you like) ----
+headings:
+  experience: Experience
+  projects: Projects
+  skills: Technologies & Tools
+  logs: Logs
+
+# ---- Work experience — newest first. 'date' is optional. ----
+experience:
+  - title: Systems Engineer
+    company: Tatvasoft
+    date: Jun 2023 - Present
+    points:
+      - Architected highly available KYC automation workflows utilizing REST APIs, drastically reducing system latency and eliminating manual operational bottlenecks for customer onboarding.
+      - Designed and deployed robust, scalable .NET and SQL Server backend architectures, ensuring strict regulatory compliance and high availability for corporate entity registrations.
+      - Engineered automated data integration pipelines for document retrieval, minimizing operational overhead and ensuring data consistency across environments.
+      - Integrated third-party financial APIs (Plaid) into core platforms, ensuring secure, frictionless, and fault-tolerant payment processing during critical traffic spikes.
+
+  - title: Reliability Engineer
+    company: LabGroup (Project)
+    date:
+    points:
+      - Developed and deployed a customized automated testing framework leveraging AI to eliminate manual QA toil, driving internal adoption and improving release reliability across engineering teams.
+
+# ---- Technologies & Tools — Pinterest-style masonry (2 columns). ----
+#      Each group is a card that hugs its content. Order top-to-bottom below
+#      = fill order across the two columns. Add a group, or add items in [ ... ].
+skills:
+  - group: Languages
+    items: [JavaScript, TypeScript, Python, C#, SQL]
+  - group: Databases
+    items: [PostgreSQL, SQL Server, Redis, Neo4j]
+  - group: Backend & APIs
+    items: [Node.js, Express.js, ASP.NET Core, .NET, RESTful APIs]
+  - group: Infrastructure & DevOps
+    items: [Docker, Kubernetes, CI/CD Pipelines, Linux, Git, eBPF, System Architecture, Jira]

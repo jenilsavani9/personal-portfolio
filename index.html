@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Mark JS-enabled (gates reveal animations) and apply theme — both before paint.
+        document.documentElement.classList.add('js');
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark-theme');
+        }
+    </script>
+
+    <!-- Speed up remaining CDN connections (js-yaml, lenis) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+    <title>Jenil Savani — Site Reliability Engineer</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Jenil Savani — Site Reliability & Systems Engineer. Building robust infrastructure, scaling backend systems from zero to production, automating operational toil, and owning reliability end-to-end.">
+    <meta name="author" content="Jenil Savani">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="keywords" content="Jenil Savani, Site Reliability Engineer, SRE, Systems Engineer, DevOps, Infrastructure, Kubernetes, Docker, Python, C#, .NET, PostgreSQL, Backend Engineer">
+    <link rel="canonical" href="https://jenilsavani.com/">
+    <meta name="theme-color" content="#121212">
+
+    <!-- Structured data: machine/LLM-readable profile (schema.org). -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://jenilsavani.com/#person",
+          "name": "Jenil Savani",
+          "url": "https://jenilsavani.com/",
+          "image": "https://jenilsavani.com/og-image.png",
+          "email": "mailto:jenilsavani.dev@gmail.com",
+          "jobTitle": "Site Reliability Engineer",
+          "description": "Site Reliability & Systems Engineer focused on building robust infrastructure, scaling backend systems from zero to production, ensuring high availability, automating operational toil, and owning complex architectural reliability problems end-to-end.",
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Site Reliability Engineer",
+            "occupationalCategory": "15-1244.00",
+            "skills": "Site Reliability Engineering, DevOps, Infrastructure, Kubernetes, Docker, CI/CD, Observability, Distributed Systems, Backend Engineering"
+          },
+          "knowsAbout": [
+            "Site Reliability Engineering",
+            "Systems Engineering",
+            "DevOps",
+            "Cloud Infrastructure",
+            "Distributed Systems",
+            "High Availability",
+            "Observability",
+            "CI/CD Pipelines",
+            "Backend Development",
+            "JavaScript",
+            "TypeScript",
+            "Python",
+            "C#",
+            "SQL",
+            "PostgreSQL",
+            "SQL Server",
+            "Redis",
+            "Neo4j",
+            "Node.js",
+            "Express.js",
+            "ASP.NET Core",
+            ".NET",
+            "RESTful APIs",
+            "Docker",
+            "Kubernetes",
+            "Linux",
+            "Git",
+            "eBPF",
+            "System Architecture"
+          ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Tatvasoft"
+          },
+          "sameAs": [
+            "https://linkedin.com/in/jenil-savani",
+            "https://github.com/jenilsavani9"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://jenilsavani.com/#website",
+          "url": "https://jenilsavani.com/",
+          "name": "Jenil Savani — Site Reliability Engineer",
+          "description": "Portfolio of Jenil Savani, a Site Reliability & Systems Engineer.",
+          "publisher": { "@id": "https://jenilsavani.com/#person" },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://jenilsavani.com/#webpage",
+          "url": "https://jenilsavani.com/",
+          "name": "Jenil Savani — Site Reliability Engineer",
+          "isPartOf": { "@id": "https://jenilsavani.com/#website" },
+          "about": { "@id": "https://jenilsavani.com/#person" },
+          "mainEntity": { "@id": "https://jenilsavani.com/#person" },
+          "inLanguage": "en"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Open Graph (LinkedIn, Facebook, Slack…) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Jenil Savani">
+    <meta property="og:url" content="https://jenilsavani.com/">
+    <meta property="og:title" content="Jenil Savani — Site Reliability Engineer">
+    <meta property="og:description" content="Building robust infrastructure, scaling backend systems from zero to production, and automating operational toil. SRE / Systems Engineer.">
+    <meta property="og:image" content="https://jenilsavani.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jenil Savani — Site Reliability Engineer">
+    <meta name="twitter:description" content="Building robust infrastructure, scaling backend systems from zero to production, and automating operational toil. SRE / Systems Engineer.">
+    <meta name="twitter:image" content="https://jenilsavani.com/og-image.png">
+
+    <!-- Compiled Tailwind CSS (built from tailwind-input.css — see README/build step) -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- YAML parser (reads content.yaml) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+
+    <style>
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-smooth iframe { pointer-events: none; }
+
+        :root {
+            --bg: #FAFAFA;
+            --text: #1A1A1A;
+            --muted: #878787;
+            --code-bg: #F0F0F0;
+            --border: #EAEAEA;
+        }
+
+        html.dark-theme {
+            --bg: #121212;
+            --text: #EAEAEA;
+            --muted: #A1A1A1;
+            --code-bg: #1E1E1E;
+            --border: #2A2A2A;
+        }
+
+        /* Reveal-on-scroll only when JS is active; otherwise content is visible immediately
+           (better LCP and crawler-readable). Hero elements opt out entirely below. */
+        .js .reveal {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .js .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .log-date { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+<body>
+    <div class="max-w-[800px] mx-auto px-[5vw] py-[10vh] relative">
+        <button id="theme-toggle" aria-label="Toggle theme" class="absolute top-[calc(10vh-0.25rem)] right-[calc(5vw-0.5rem)] text-muted hover:text-foreground p-2 z-10 transition-colors">
+            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2 pointer-events-none" stroke-linecap="round" stroke-linejoin="round"></svg>
+        </button>
+
+        <header class="mb-3">
+            <h1 id="site-name" class="text-lg font-medium tracking-tight">Jenil Savani</h1>
+            <h2 id="site-role" class="text-[0.9375rem] text-muted">Site Reliability Engineer | Systems Engineer</h2>
+        </header>
+
+        <div class="mb-6">
+            <p id="site-bio" class="text-sm text-foreground leading-relaxed max-w-xl">Engineer focused on building robust infrastructure, scaling backend systems from zero to production, and ensuring high availability. Strong bias toward automating operational toil, optimizing CI/CD pipelines, and owning complex architectural reliability problems end-to-end.</p>
+        </div>
+
+        <div id="site-quote-wrap" class="mb-8" style="display:none;">
+            <p id="site-quote" class="text-[0.8125rem] text-muted tracking-wide"></p>
+        </div>
+
+        <div id="socials-container" class="mb-16 flex items-center gap-4"></div>
+
+        <!-- 1. Work Experience -->
+        <section class="reveal mb-14">
+            <h3 id="heading-experience" class="text-xs font-medium text-muted uppercase tracking-wider mb-6"></h3>
+            <div id="experience-container" class="relative border-l border-border ml-[5px] pl-6 space-y-8"></div>
+        </section>
+
+        <!-- 2. Projects -->
+        <section class="reveal mb-14">
+            <h3 id="heading-projects" class="text-xs font-medium text-muted uppercase tracking-wider mb-6"></h3>
+            <div id="projects-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start"></div>
+        </section>
+
+        <!-- 3. Technologies & Tools -->
+        <section class="reveal mb-14">
+            <h3 id="heading-skills" class="text-xs font-medium text-muted uppercase tracking-wider mb-6"></h3>
+            <div id="skills-container" class="columns-1 sm:columns-2 gap-4"></div>
+        </section>
+
+        <!-- 4. Logs (Dynamic) -->
+        <section class="reveal mb-14">
+            <h3 id="heading-logs" class="text-xs font-medium text-muted uppercase tracking-wider mb-6"></h3>
+            <ul id="logs-container" class="space-y-3 flex flex-col"></ul>
+        </section>
+
+        <!-- Static fallback for non-JS crawlers (GPTBot, ClaudeBot, etc.). Mirrors content.yaml. -->
+        <noscript>
+            <section>
+                <h3>Experience</h3>
+                <h4>Systems Engineer — Tatvasoft (Jun 2023 - Present)</h4>
+                <ul>
+                    <li>Architected highly available KYC automation workflows utilizing REST APIs, reducing system latency and eliminating manual operational bottlenecks for customer onboarding.</li>
+                    <li>Designed and deployed robust, scalable .NET and SQL Server backend architectures, ensuring regulatory compliance and high availability for corporate entity registrations.</li>
+                    <li>Engineered automated data integration pipelines for document retrieval, minimizing operational overhead and ensuring data consistency across environments.</li>
+                    <li>Integrated third-party financial APIs (Plaid) into core platforms, ensuring secure, fault-tolerant payment processing during critical traffic spikes.</li>
+                </ul>
+                <h4>Reliability Engineer — LabGroup (Project)</h4>
+                <ul>
+                    <li>Developed and deployed a customized AI-driven automated testing framework to eliminate manual QA toil, improving release reliability across engineering teams.</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Projects</h3>
+                <h4><a href="project-template.html?project=secrin">Secrin — Developer Context Engine</a></h4>
+                <p>A platform that captures and preserves the "why" behind engineering decisions — unifying GitHub, Jira, and Confluence into a single, queryable knowledge graph. Built with Next.js, Python, Neo4j, and Redis.</p>
+            </section>
+            <section>
+                <h3>Technologies &amp; Tools</h3>
+                <p><strong>Languages:</strong> JavaScript, TypeScript, Python, C#, SQL</p>
+                <p><strong>Databases:</strong> PostgreSQL, SQL Server, Redis, Neo4j</p>
+                <p><strong>Backend &amp; APIs:</strong> Node.js, Express.js, ASP.NET Core, .NET, RESTful APIs</p>
+                <p><strong>Infrastructure &amp; DevOps:</strong> Docker, Kubernetes, CI/CD Pipelines, Linux, Git, eBPF, System Architecture, Jira</p>
+            </section>
+            <section>
+                <h3>Logs</h3>
+                <p><a href="log-template.html?log=incident-01">Incident Post-Mortem: Infrastructure Optimization</a> (2026-06-02)</p>
+            </section>
+        </noscript>
+    </div>
+
+    <!-- Scripts -->
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script>
+        // Initialize Smooth Momentum Scrolling once the deferred lenis lib is ready.
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof Lenis === 'undefined') return;
+            const lenis = new Lenis({ lerp: 0.07, smoothWheel: true });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+        });
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        const sunIcon = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+
+        function updateIcon() { themeIcon.innerHTML = document.documentElement.classList.contains('dark-theme') ? sunIcon : moonIcon; }
+        updateIcon();
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateIcon();
+        });
+
+        let staggerDelay = 0;
+        let staggerTimeout;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${staggerDelay}s`;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+
+                    staggerDelay += 0.1; // 100ms stagger between elements
+                    clearTimeout(staggerTimeout);
+                    staggerTimeout = setTimeout(() => {
+                        staggerDelay = 0;
+                    }, 50); // Reset stagger if no new elements appear within 50ms
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+        function observeElements() {
+            document.querySelectorAll('.reveal:not(.active)').forEach(el => observer.observe(el));
+        }
+
+        document.addEventListener('DOMContentLoaded', observeElements);
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str == null ? '' : String(str);
+            return div.innerHTML;
+        }
+
+        // ---- Render all static text from content.yaml ----
+        const socialIcons = {
+            linkedin: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>',
+            github: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>',
+            email: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>'
+        };
+        const socialLabels = { linkedin: 'LinkedIn', github: 'GitHub', email: 'Email' };
+
+        const renderContent = () => fetch('content.yaml')
+            .then(res => res.text())
+            .then(text => {
+                const c = jsyaml.load(text) || {};
+                const h = c.headings || {};
+
+                // Header + intro
+                document.getElementById('site-name').textContent = c.name || '';
+                document.getElementById('site-role').textContent = c.role || '';
+                document.getElementById('site-bio').textContent = c.bio || '';
+                const primaryRole = (c.role || '').split('|')[0].trim();
+                document.title = (c.name || 'Portfolio') + (primaryRole ? ' — ' + primaryRole : '');
+
+                if (c.quote) {
+                    const q = document.getElementById('site-quote');
+                    q.textContent = c.quote;
+                    document.getElementById('site-quote-wrap').style.display = '';
+                }
+
+                // Section headings
+                document.getElementById('heading-experience').textContent = h.experience || 'Experience';
+                document.getElementById('heading-projects').textContent = h.projects || 'Projects';
+                document.getElementById('heading-skills').textContent = h.skills || 'Technologies & Tools';
+                document.getElementById('heading-logs').textContent = h.logs || 'Logs';
+
+                // Social links
+                const socialsEl = document.getElementById('socials-container');
+                (c.socials || []).forEach(s => {
+                    if (!s || !s.type || !s.url || !socialIcons[s.type]) return;
+                    const a = document.createElement('a');
+                    a.href = s.url;
+                    a.className = 'text-muted hover:text-foreground transition-colors';
+                    a.setAttribute('aria-label', socialLabels[s.type] || s.type);
+                    if (!s.url.startsWith('mailto:')) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+                    a.innerHTML = socialIcons[s.type];
+                    socialsEl.appendChild(a);
+                });
+
+                // Experience timeline
+                const expEl = document.getElementById('experience-container');
+                (c.experience || []).forEach(job => {
+                    const points = (job.points || [])
+                        .map(p => `<li>${escapeHTML(p)}</li>`).join('');
+                    const dateSpan = job.date
+                        ? `<span class="text-xs text-muted tabular-nums">${escapeHTML(job.date)}</span>` : '';
+                    const item = document.createElement('div');
+                    item.className = 'relative';
+                    item.innerHTML = `
+                        <div class="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full bg-border border-2 border-background"></div>
+                        <h4 class="text-sm font-medium text-foreground">${escapeHTML(job.title || '')}</h4>
+                        <div class="flex justify-between items-baseline mt-1 mb-3">
+                            <span class="text-sm text-muted">${escapeHTML(job.company || '')}</span>
+                            ${dateSpan}
+                        </div>
+                        <ul class="list-disc list-outside ml-4 text-sm text-muted space-y-2 leading-relaxed">${points}</ul>
+                    `;
+                    expEl.appendChild(item);
+                });
+
+                // Skills — Pinterest-style masonry (2 cols, cards hug content)
+                const skillsEl = document.getElementById('skills-container');
+                (c.skills || []).forEach(grp => {
+                    const count = String((grp.items || []).length).padStart(2, '0');
+                    const pills = (grp.items || [])
+                        .map(it => `<span class="px-3 py-1 text-xs font-medium rounded-full bg-code border border-border text-foreground">${escapeHTML(it)}</span>`)
+                        .join('');
+                    const card = document.createElement('div');
+                    card.className = 'reveal break-inside-avoid mb-4 p-5 rounded-xl border border-border bg-background hover:bg-code hover:-translate-y-0.5 transition-all duration-300';
+                    card.innerHTML = `
+                        <div class="flex items-baseline justify-between mb-4">
+                            <h4 class="text-xs font-medium text-muted uppercase tracking-wider">${escapeHTML(grp.group || '')}</h4>
+                            <span class="text-xs text-muted tabular-nums opacity-60">${count}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">${pills}</div>
+                    `;
+                    skillsEl.appendChild(card);
+                });
+
+                observeElements();
+            })
+            .catch(err => console.error('Error loading content.yaml:', err));
+
+        // js-yaml is deferred, so render once the DOM (and deferred scripts) are ready.
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderContent);
+        } else {
+            renderContent();
+        }
+
+        // Render project squares from projects.json
+        fetch('projects.json')
+            .then(res => res.json())
+            .then(projects => {
+                const container = document.getElementById('projects-container');
+                projects.forEach(project => {
+                    const tags = Array.isArray(project.tags)
+                        ? project.tags.slice(0, 4).map(t =>
+                            `<span class="px-2 py-0.5 text-[0.6875rem] font-medium rounded-full bg-code border border-border text-muted">${escapeHTML(t)}</span>`
+                          ).join('')
+                        : '';
+                    const a = document.createElement('a');
+                    a.href = `project-template.html?project=${encodeURIComponent(project.id)}`;
+                    a.className = 'reveal group flex flex-col p-5 rounded-xl border border-border bg-background hover:bg-code transition-colors duration-300';
+                    a.innerHTML = `
+                        <div class="flex items-start justify-between gap-2">
+                            <h4 class="text-sm font-medium text-foreground group-hover:opacity-80 transition-opacity">${escapeHTML(project.title)}</h4>
+                            <svg class="w-3.5 h-3.5 text-muted opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </div>
+                        ${project.subtitle ? `<p class="text-xs text-muted mt-0.5">${escapeHTML(project.subtitle)}</p>` : ''}
+                        <p class="text-xs text-muted leading-relaxed mt-3">${escapeHTML(project.summary || '')}</p>
+                        <div class="flex flex-wrap gap-1.5 mt-4">${tags}</div>
+                    `;
+                    container.appendChild(a);
+                });
+                observeElements();
+            })
+            .catch(err => console.error('Error fetching projects:', err));
+
+        fetch('logs.json')
+            .then(res => res.json())
+            .then(logs => {
+                const container = document.getElementById('logs-container');
+                logs.forEach(log => {
+                    const li = document.createElement('li');
+                    li.classList.add('reveal');
+                    li.innerHTML = `<a href="log-template.html?log=${encodeURIComponent(log.id)}" class="group flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-8 w-full"><span class="log-date text-sm text-muted w-[5.5rem] flex-shrink-0 transition-colors group-hover:text-foreground">${escapeHTML(log.date)}</span><span class="log-title text-[0.9375rem] text-foreground transition-opacity group-hover:opacity-60">${escapeHTML(log.title)}</span></a>`;
+                    container.appendChild(li);
+                });
+                observeElements();
+            })
+            .catch(err => console.error('Error fetching logs:', err));
+    </script>
+</body>
+</html>

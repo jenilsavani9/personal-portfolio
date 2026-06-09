@@ -1,0 +1,13 @@
+[
+  {
+    "id": "secrin",
+    "title": "Secrin",
+    "subtitle": "Developer Context Engine",
+    "summary": "A platform that captures and preserves the \"why\" behind engineering decisions — unifying GitHub, Jira, and Confluence into a single, queryable knowledge graph.",
+    "year": "2025",
+    "role": "Founding Engineer",
+    "stack": "Next.js · Python · Neo4j · Redis",
+    "github": "https://github.com/SecrinLabs/secrin",
+    "tags": ["Next.js", "Python", "Neo4j", "Redis", "LLM"]
+  }
+]

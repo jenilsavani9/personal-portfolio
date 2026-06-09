@@ -1,0 +1,9 @@
+[
+  {
+    "id": "incident-01",
+    "date": "2026-06-02",
+    "title": "Incident Post-Mortem: Infrastructure Optimization",
+    "status": "Resolved",
+    "environment": "Production"
+  }
+]

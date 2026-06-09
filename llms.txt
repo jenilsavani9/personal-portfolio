@@ -1,0 +1,32 @@
+# Jenil Savani
+
+> Site Reliability & Systems Engineer. Builds robust infrastructure, scales backend systems from zero to production, ensures high availability, automates operational toil, and owns complex architectural reliability problems end-to-end.
+
+## About
+
+- **Name:** Jenil Savani
+- **Role:** Site Reliability Engineer | Systems Engineer
+- **Focus:** Infrastructure reliability, backend scaling, CI/CD optimization, operational automation, high availability.
+- **Contact:** jenilsavani.dev@gmail.com
+- **LinkedIn:** https://linkedin.com/in/jenil-savani
+- **GitHub:** https://github.com/jenilsavani9
+
+## Experience
+
+- **Systems Engineer — Tatvasoft (Jun 2023 - Present):** Architected highly available KYC automation workflows on REST APIs; designed scalable .NET + SQL Server backends for regulated corporate registrations; built automated data integration pipelines; integrated Plaid for fault-tolerant payments under traffic spikes.
+- **Reliability Engineer — LabGroup (Project):** Built an AI-driven automated testing framework that eliminated manual QA toil and improved release reliability across teams.
+
+## Projects
+
+- [Secrin — Developer Context Engine](https://jenilsavani.com/project-template.html?project=secrin): A platform that captures and preserves the "why" behind engineering decisions, unifying GitHub, Jira, and Confluence into a single queryable knowledge graph. Stack: Next.js, Python, Neo4j, Redis. Source: https://github.com/SecrinLabs/secrin
+
+## Skills
+
+- **Languages:** JavaScript, TypeScript, Python, C#, SQL
+- **Databases:** PostgreSQL, SQL Server, Redis, Neo4j
+- **Backend & APIs:** Node.js, Express.js, ASP.NET Core, .NET, RESTful APIs
+- **Infrastructure & DevOps:** Docker, Kubernetes, CI/CD Pipelines, Linux, Git, eBPF, System Architecture, Jira
+
+## Logs
+
+- [Incident Post-Mortem: Infrastructure Optimization](https://jenilsavani.com/log-template.html?log=incident-01) (2026-06-02): Auto-scaling misconfiguration caused a 14-minute partial EU outage; root cause, timeline, and remediation.
